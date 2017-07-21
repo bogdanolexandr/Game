@@ -18,19 +18,26 @@ public class Controller {
 	}
 
 	public void doProcess() {
-		
 		Model model = new Model();
-		model.addAttribute("min", game.getMinVal());
-		model.addAttribute("max", game.getMaxVal());
 		int suspect;
-		
+		boolean isWinner;
 		while (true) {
-			suspect = reader.readNumber(model);
-			if (game.guess(suspect)) {
-				model.addAttribute("result", game.getStatistics());
-				view.showResult(model);
-				break;
+			model.addAttribute("min", game.getMinVal());
+			model.addAttribute("max", game.getMaxVal());
+			view.showInvitation(model);
+			suspect = reader.readNumber();
+			isWinner = game.guess(suspect);
+			if(game.isCorrectEnter()) {
+				if (isWinner) {
+					model.addAttribute("result", game.getStatistics());
+					view.showResult(model);
+					break;
+				}
+			}else {
+				model.addAttribute("error", game.getError());
+				view.showRangeError(model);
 			}
+			
 		}
 	}
 

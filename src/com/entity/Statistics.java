@@ -5,13 +5,13 @@ import java.util.List;
 public class Statistics {
 
 	private List<Integer> attempts;
-	private int suspect;
+	private int answer;
 	private int maxValue;
 	private int minValue;
 
 	public Statistics(List<Integer> attempts, int suspect, int maxValue, int minValue) {
 		this.attempts = attempts;
-		this.suspect = suspect;
+		this.answer = suspect;
 		this.maxValue = maxValue;
 		this.minValue = minValue;
 	}
@@ -25,11 +25,11 @@ public class Statistics {
 	}
 
 	public int getSuspect() {
-		return suspect;
+		return answer;
 	}
 
 	public void setSuspect(int suspect) {
-		this.suspect = suspect;
+		this.answer = suspect;
 	}
 
 	public int getMaxValue() {
