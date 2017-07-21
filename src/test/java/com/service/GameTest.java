@@ -17,8 +17,10 @@ public class GameTest {
 
 	@Test
 	public void testGuessWrongInput() {
-		assertEquals(false, game.guess(16));
-		assertEquals(false, game.guess(0));
+		game.guess(0);
+		assertEquals(false, game.isCorrectEnter());
+		game.guess(16);
+		assertEquals(false, game.isCorrectEnter());
 	}
 
 }
