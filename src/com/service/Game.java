@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.entity.Statistics;
+import com.exception.WrongRangeException;
 
 public class Game {
 
@@ -24,8 +25,8 @@ public class Game {
 	}
 
 	public boolean guess(int suspect) {
-		
-		if(suspect == -1){
+
+		if (suspect == -1) {
 			return false;
 		}
 		usersAnswers.add(suspect);
@@ -50,8 +51,16 @@ public class Game {
 	}
 
 	private int rand(int min, int max) {
-		minVal = min;
-		maxVal = max;
+		if (min > 1 && max < 100) {
+			if (max - min > 2) {
+				minVal = min;
+				maxVal = max;
+			} else {
+				throw new WrongRangeException();
+			}
+		} else {
+			throw new WrongRangeException();
+		}
 		answer = random.nextInt(max) + min;
 		return answer;
 	}
@@ -59,7 +68,7 @@ public class Game {
 	private int rand() {
 		minVal = 0;
 		maxVal = RAND_MAX;
-		answer = random.nextInt(maxVal);
+		answer = random.nextInt(maxVal - 1) + 1;
 		return answer;
 
 	}
