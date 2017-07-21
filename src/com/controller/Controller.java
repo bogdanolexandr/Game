@@ -1,4 +1,9 @@
-package com;
+package com.controller;
+
+import com.service.Game;
+import com.util.Model;
+import com.util.Reader;
+import com.view.View;
 
 public class Controller {
 

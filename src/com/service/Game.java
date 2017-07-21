@@ -1,8 +1,10 @@
-package com;
+package com.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.entity.Statistics;
 
 public class Game {
 

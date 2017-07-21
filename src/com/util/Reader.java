@@ -1,6 +1,8 @@
-package com;
+package com.util;
 
 import java.util.Scanner;
+
+import com.view.View;
 
 public class Reader {
 	private View view;

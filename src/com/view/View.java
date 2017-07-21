@@ -1,4 +1,7 @@
-package com;
+package com.view;
+
+import com.entity.Statistics;
+import com.util.Model;
 
 public class View {
 
