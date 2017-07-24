@@ -6,6 +6,7 @@ import java.util.Random;
 
 import com.entity.Statistics;
 import com.exception.WrongRangeException;
+import com.util.Verifier;
 
 public class Game {
 
@@ -17,20 +18,25 @@ public class Game {
 	private int maxVal;
 	private List<Integer> usersAnswers = new ArrayList<>();
 	private Random random = new Random();
-	private boolean isCorrectEnter;
-	private String error;
+	private Verifier verifier = new Verifier();
 
 	public Game() {
-		rand();
+		answer = generateRandomNumber(RAND_MIN + 1, RAND_MAX - 1);
 	}
 
 	public Game(int min, int max) {
-		rand(min, max);
+		if (verifier.verifyRange(min, max, RAND_MIN, RAND_MAX, AVAILABLE_DIFFERENCE)) {
+			answer = generateRandomNumber(min, max);
+			minVal = min;
+			maxVal = max;
+		} else {
+			throw new WrongRangeException();
+		}
 	}
 
 	public boolean guess(int suspect) {
-		boolean correctnessOfEnter = verify(suspect);
-		if (correctnessOfEnter) {
+		boolean isCorrectEnter = verifier.verifyEnter(suspect, minVal, maxVal);
+		if (isCorrectEnter) {
 			boolean isWinner = isRightAnswer(suspect);
 			if (isWinner) {
 				return true;
@@ -56,11 +62,11 @@ public class Game {
 	}
 
 	public boolean isCorrectEnter() {
-		return isCorrectEnter;
+		return verifier.isCorrectEnter();
 	}
 
 	public String getError() {
-		return error;
+		return verifier.getError();
 	}
 
 	private void changeRange(int suspect) {
@@ -73,49 +79,12 @@ public class Game {
 		}
 	}
 
-	private boolean verify(int suspect) {
-		if (suspect == -1) {
-			isCorrectEnter = false;
-			this.error = " you should enter a number";
-			return false;
-		}
-		if ((suspect < minVal) || (suspect > maxVal)) {
-			isCorrectEnter = false;
-			this.error = " your number is out of range";
-			return false;
-		}
-		isCorrectEnter = true;
-		return true;
-	}
-
 	private boolean isRightAnswer(int suspect) {
 		return (suspect == answer) ? true : false;
 	}
 
-	private int rand(int min, int max) {
-		if ((min > RAND_MIN) && (max < RAND_MAX)) {
-			if ((max - min) >= AVAILABLE_DIFFERENCE) {
-				minVal = min;
-				maxVal = max;
-			} else {
-				throw new WrongRangeException();
-			}
-		} else {
-			throw new WrongRangeException();
-		}
-		answer = generateRandomNumber(min, max);
-		return answer;
-	}
-
-	private int rand() {
-		minVal = RAND_MIN + 1;
-		maxVal = RAND_MAX - 1;
-		answer = generateRandomNumber(minVal, maxVal);
-		return answer;
-	}
-
 	private int generateRandomNumber(int min, int max) {
-		return random.nextInt(maxVal - minVal) + minVal;
+		return random.nextInt(max - min) + min;
 	}
 
 }
